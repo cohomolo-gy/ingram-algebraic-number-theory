@@ -1,0 +1,146 @@
+% XeLaTeX can use any Mac OS X font. See the setromanfont command below.
+% Input to XeLaTeX is full Unicode, so Unicode characters can be typed directly into the source.
+
+% The next lines tell TeXShop to typeset with xelatex, and to open and save the source with Unicode encoding.
+
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[12pt]{article}
+
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{tikz-cd}
+\usepackage{enumerate}
+\usepackage{xfrac}
+\usepackage{hyperref}
+\usepackage{unicode-math}
+\usepackage{fontspec,xltxtra,xunicode}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{lemma}
+\newtheorem{exercise}{Exercise}
+
+
+\newcommand{\ideal}[1]{\mathfrak{#1}}
+\newcommand{\ia}{\mathfrak{a}}
+\newcommand{\ib}{\mathfrak{b}}
+\newcommand{\qa}{R/\ia}
+\newcommand{\seq}{\subseteq}
+
+
+\title{Ingram Algebraic Number Theory Course Solutions (Appendix)}
+\author{Emily Pillmore}
+
+\begin{document}
+\maketitle
+
+\begin{exercise}[A.9]
+Let $R$ be a (commutative) ring (with identity), and let $\ia, \ib \seq R$ be ideals. Show that
+	\begin{center}
+		\begin{equation*}
+			\ia + \ib =_{def}  \{ a + b :  a \in \ia, b \in \ib\} 
+		\end{equation*}
+	\end{center}
+Is an ideal of $R$.
+\end{exercise}
+\begin{proof}
+By definition, $\ia + \ib$ is an ideal of $R$ if it forms an additive subgroup of $R$, (i.e. if $(\ia + \ib) \pm (\ia + \ib) \seq \ia + \ib$) and if it is closed under (left) multiplicative actions $r\ia \seq \ia$ for all $r \in R$. The former is proven by noting that distributivity inherited by $R$ yields the following for all $r \in R$: $r(\ia + \ib) = r\ia + r\ib = \ia + \ib$. Hence $\ia + \ib$ is closed under (left) multiplicative actions. We must now show the former requirement holds. 
+
+Let $k, k' \in \ia + \ib$. Note that $k$ has the form $k = a + b$ as defined above. Therefore, $k + k' = (a + b) + (a' + b') = (a + a') + (b + b') \in \ia + \ib$ using associativity inherited by additivity in $R$, with $0 = 0 + 0$. A similar proof is given for subtraction, hence $\ia + \ib$ is closed under the additive group operation of $R$, and is therefore an ideal of $R$.
+\end{proof}
+
+\begin{exercise}[A.11]
+Show that if $a, b \seq R$ are ideals, then so is $\ia\ib$, defined as the set of all finite sums of elements of the form $ab$ with $a \in \ia$ and $b \in \ib$ (including the “empty sum” 0). Show also that this is the smallest ideal containing all elements of the form $ab$ (with $a \in \ia$ and $b \in \ib$).
+\end{exercise}
+
+\begin{proof}
+
+Note that each element $ab \in \ia\ib$ takes the form $\sum_{i,j = 0}^{n-1} a_i b_j$ where $a \in \ia, b\in \ib$. Must check closure under left multiplicative actions by elements in $R$, and that these elements are closed under the additive group action of $R$. Let's first check multiplicativity: 
+
+\begin{equation*}
+	\begin{aligned}
+	rab & = r(\sum_{i,j} a_i b_j) \\
+	      & = \sum_{i,j} ra_i b_j \\
+	      & = \sum_{i,j} a_i b_j   & \text{ ($ra \in \ia$ for all $r \in R$)}
+	\end{aligned}
+\end{equation*}
+
+Hence, finite formal sums are closed under left multiplicative actions by elements of $R$. Now, we check that it is closed under addition: 
+
+\begin{equation*}
+	\begin{aligned}
+	ab + a'b' & = \sum_{i,j}^n a_i b_j + \sum_{k,l}^m a'_k b'_l\\
+	      & = \sum_{t = i + k, u = j + l}^{n + m} a_t b_u
+	\end{aligned}
+\end{equation*}
+
+Where $t < n$ enumerates the indices $i$ with $t >= n$ enumerates $k$, likewise for $u$. Hence, the sum of finite formal sums of elements $a, a' \in \ia, b, b' \in \ib$ is again a finite formal sum of elements in $\ia$ and $\ib$. The proof is similar for subtraction, with extra steps noting that $\ia$ and $\ib$ are closed under subtraction themselves:
+
+\begin{equation*}
+	\begin{aligned}
+	 ab - a'b' & = \sum_{i,j}^n a_i b_j - \sum_{k,l}^m a'_k b'_l \\
+	   	      & = \sum_{i,j}^n a_i b_j + (-1)\sum_{k,l}^m a'_k b'_l \\
+		      & = \sum_{i,j}^n a_i b_j + \sum_{k,l}^m (-1)a'_k b'_l  \\
+		      & = \sum_{i,j}^n a_i b_j + \sum_{k,l}^m a''_k b'_l \\
+		      & = \sum_{t = i + k, u = j + l}^{n + m} a_t b_u
+	\end{aligned}
+\end{equation*}
+
+Hence, $\ia\ib$ is an ideal of $R$.
+\end{proof}
+
+\begin{exercise}[A.12]
+
+Let $a, b \in R$. Show that $(a)(b) = (ab)$ (i.e., the product of two ideals means what you think it does for principal ideals). Note again that the product operation does not turn the ideals of $R$ (or even the non-zero ideals of $R$) into a group.
+
+\end{exercise}
+
+\begin{proof}
+	Let $(a) = aR, (b) = bR$ be principal ideals of $R$. We must show that $(a)(b) = (ab)$ is again a principle of $R$. Consider $(a)(b)$: 
+
+\begin{equation*}
+	\begin{aligned}
+		(a)(b) & = aRbR  \\
+			 & = abRR & \text{ (commutativity of multiplication in $R$)}\\
+			 & = abR & \text{ (closure under $\times$) } \\
+			 & = (ab)
+	\end{aligned}
+\end{equation*}
+
+Hence, $(ab)$ is again a principal ideal of $R$. This is not a group in general for obvious reasons when considering $(0)$, but also in the case of non-zero ideals. Let $a$ and $b$ be zero elements such that $ab = 0$. Then $(b) = (1)(b) = (a^{-1}a)(b) = (a^{-1})(a)(b) = (a^{-1})(ab) = (a^{-1})(0) = (0)$ yields a contradiction. This holds, in fact, even for arbitrary ideals $\ia\ib$ (via a similar proof).Hence ideals can't form a group under multiplication in the presence of zero elements which may not be 0.  
+\end{proof}
+
+\begin{exercise}[A.15 (optional)]
+If $R$ is a commutative ring with identity and $\ia \seq R$ is an ideal, then $\qa$ is a commutative ring with multiplicative identity $1 + \ia$ and additive identity $a = 0 + a$.
+\end{exercise}
+
+\begin{proof}
+	This is equivalent to noting that for any other ring $Q$,  $\qa$ is the coequalizer of the parallel pair $Q \rightrightarrows R$: 
+	
+	\begin{center}
+	\begin{tikzcd}
+		Q \ar[r, "f", shift left] \ar[r, "g", shift right, swap] & R \ar[r, "h"] \ar[d, "\phi", swap] & S
+		\\ & R/\ia \ar[ur, "\exists ! q", dotted, swap]
+	\end{tikzcd}
+	\end{center}
+Hence, $\qa$ is a quotient object in $CRng$. (this is a mechanical proof)
+\end{proof}
+
+\begin{exercise}[A.18]
+Let $F$ be a field, and let $R = F[X]$. Prove that every non-zero ideal in $R$ is principal. You may use the division algorithm for polynomials, which says that if $a, b \in F[X]$, with $b \neq  0$, then there exist $q, r \in F[X]$ such that $a = bq+r$, and $0 \leq deg(r) < deg(b)$.
+\end{exercise}
+
+\begin{proof}
+
+\end{proof}
+
+\end{document}  
